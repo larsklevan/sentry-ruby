@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+- Stop transaction sampling if events are not allowed to be sent [#1421](https://github.com/getsentry/sentry-ruby/pull/1421)
+
 ## 4.4.0-beta.0
 
 ### Features
