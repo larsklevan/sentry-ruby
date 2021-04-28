@@ -64,7 +64,7 @@ module Sentry
     end
 
     def set_initial_sample_decision(sampling_context:)
-      unless configuration.tracing_enabled?
+      unless configuration.tracing_enabled? && configuration.sending_allowed?
         @sampled = false
         return
       end

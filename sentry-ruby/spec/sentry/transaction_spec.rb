@@ -173,6 +173,21 @@ RSpec.describe Sentry::Transaction do
         allow(Sentry.configuration).to receive(:tracing_enabled?).and_return(true)
       end
 
+      context "when event reporting is not enabled" do
+        before do
+          Sentry.configuration.enabled_environments = ["production"]
+        end
+
+        it "sets @sampled to false and return" do
+          transaction = described_class.new(sampled: true, hub: Sentry.get_current_hub)
+          transaction.set_initial_sample_decision(sampling_context: {})
+          expect(transaction.sampled).to eq(false)
+          expect(string_io.string).not_to include(
+            "[Tracing]"
+          )
+        end
+      end
+
       context "when the transaction already has a decision" do
         it "doesn't change it" do
           transaction = described_class.new(sampled: true, hub: Sentry.get_current_hub)
